@@ -1,0 +1,78 @@
+[
+  {
+    "question": "How can I track my order?",
+    "answer": "You can track your order by visiting the 'My Orders' section in your account dashboard. You'll find a real-time tracking link sent to your registered email once your order is shipped."
+  },
+  {
+    "question": "Can I return my product?",
+    "answer": "Yes! We offer a hassle-free 30-day return policy. Simply go to 'My Orders', select the item, and click 'Return'. Our team will arrange a pickup within 2 business days."
+  },
+  {
+    "question": "What payment methods do you accept?",
+    "answer": "We accept all major credit/debit cards (Visa, MasterCard, Amex), PayPal, Apple Pay, Google Pay, net banking, and UPI."
+  },
+  {
+    "question": "How long does delivery take?",
+    "answer": "Standard delivery takes 3–5 business days. Express delivery (1–2 days) is available at checkout for most pin codes. International shipping typically takes 7–14 days."
+  },
+  {
+    "question": "Can I cancel my order?",
+    "answer": "You can cancel your order within 24 hours of placing it. Go to 'My Orders', select the order, and click 'Cancel'. Once shipped, cancellation is not possible but you may return it."
+  },
+  {
+    "question": "How do I reset my password?",
+    "answer": "Click 'Forgot Password' on the login page, enter your registered email, and you'll receive a reset link within a few minutes. Check your spam folder if you don't see it."
+  },
+  {
+    "question": "Do you offer discounts or coupons?",
+    "answer": "Yes! Subscribe to our newsletter for exclusive discount codes. You can also find active coupon codes on our Offers page. First-time shoppers get 10% off automatically."
+  },
+  {
+    "question": "How do I contact customer support?",
+    "answer": "You can reach our support team 24/7 via live chat on our website, by emailing support@example.com, or by calling 1-800-EXAMPLE (Mon–Sat, 9 AM–6 PM)."
+  },
+  {
+    "question": "Is my personal information secure?",
+    "answer": "Absolutely. We use 256-bit SSL encryption for all transactions and never share your personal data with third parties. Your privacy is our top priority."
+  },
+  {
+    "question": "How do I change my shipping address?",
+    "answer": "You can update your shipping address in 'My Account > Addresses'. For an existing order, contact support immediately — address changes are possible only before dispatch."
+  },
+  {
+    "question": "Do you ship internationally?",
+    "answer": "Yes, we ship to over 80 countries! International shipping rates and delivery times vary by destination. You can check estimated costs at checkout."
+  },
+  {
+    "question": "What if I receive a damaged product?",
+    "answer": "We sincerely apologize for the inconvenience. Please take photos and report it within 48 hours via 'My Orders > Report Issue'. We'll send a replacement or issue a full refund immediately."
+  },
+  {
+    "question": "How do I create an account?",
+    "answer": "Click 'Sign Up' on the top-right of our homepage, fill in your name, email, and password. You can also sign up quickly using your Google or Facebook account."
+  },
+  {
+    "question": "Can I exchange a product?",
+    "answer": "Yes, exchanges are supported for size or color variants within 30 days of delivery. Use the 'Exchange' option in 'My Orders'. Exchanges are free for the first request."
+  },
+  {
+    "question": "Where can I find my invoice?",
+    "answer": "Your invoice is automatically emailed after purchase. You can also download it anytime from 'My Orders > View Invoice' in your account dashboard."
+  },
+  {
+    "question": "Where is my order?",
+    "answer": "You can track your order from the Orders section."
+  },
+  {
+    "question": "How do I track my package?",
+    "answer": "You can track your order from the Orders section."
+  },
+  {
+    "question": "Can I see where my package is?",
+    "answer": "You can track your order from the Orders section."
+  },
+  {
+    "question": "What is the status of my delivery?",
+    "answer": "You can track your order from the Orders section."
+  }
+]

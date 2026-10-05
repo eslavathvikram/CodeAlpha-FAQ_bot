@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ AI Assistant — Smart Help Center</title>
+  <meta name="description" content="Get instant answers to your questions with our AI-powered FAQ chatbot. Powered by TF-IDF similarity matching and NLTK." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="FAQ Chatbot Home">
+        <div class="logo-icon" aria-hidden="true">🤖</div>
+        <span class="logo-text">FAQ Assistant</span>
+      </a>
+      <div class="header-badge" role="status" aria-live="polite">
+        <span class="status-dot"></span>
+        AI Online
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main ───────────────────────────────────────────────── -->
+  <main class="main" id="main-content">
+
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-eyebrow" aria-hidden="true">✨ Powered by TF-IDF &amp; NLP</div>
+      <h1 id="hero-heading">How can we help you today?</h1>
+      <p>Ask anything — our AI finds the most relevant answer from our knowledge base instantly.</p>
+    </section>
+
+    <!-- Chat Card -->
+    <div class="chat-wrapper" role="main">
+      <div class="chat-card">
+
+        <!-- Messages -->
+        <section
+          class="chat-messages"
+          id="chat-messages"
+          role="log"
+          aria-label="Chat conversation"
+          aria-live="polite"
+          aria-atomic="false"
+        >
+          <!-- Welcome state (hidden once chat starts) -->
+          <div class="welcome-state" id="welcome-state" aria-hidden="false">
+            <div class="bot-avatar-lg" aria-hidden="true">💬</div>
+            <h3>Ask your first question!</h3>
+            <p>Type below or pick a suggestion to get started. I'm here 24/7.</p>
+          </div>
+
+          <!-- Typing indicator -->
+          <div class="typing-indicator" id="typing-indicator" aria-label="Assistant is typing" aria-hidden="true">
+            <div class="avatar bot-avatar" aria-hidden="true">🤖</div>
+            <div class="typing-bubble">
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+              <span class="typing-dot"></span>
+            </div>
+          </div>
+        </section>
+
+        <div class="chat-divider" role="separator"></div>
+
+        <!-- Input -->
+        <div class="chat-input-area">
+          <form id="chat-form" onsubmit="return false;" aria-label="Send a message">
+            <div class="input-row">
+              <textarea
+                id="question-input"
+                name="question"
+                placeholder="Type your question here…"
+                rows="1"
+                maxlength="500"
+                autocomplete="off"
+                spellcheck="true"
+                aria-label="Your question"
+                aria-required="true"
+              ></textarea>
+              <button
+                id="send-btn"
+                type="submit"
+                aria-label="Send message"
+                disabled
+              >
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                </svg>
+              </button>
+            </div>
+          </form>
+          <p class="input-hint" id="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</p>
+        </div>
+
+      </div><!-- /.chat-card -->
+
+      <!-- Suggestion chips -->
+      <div class="suggestions" aria-label="Suggested questions">
+        <p class="suggestions-label">Try asking</p>
+        <div class="chip-list" role="list">
+          <button class="chip" role="listitem" onclick="useChip(this)">How can I track my order?</button>
+          <button class="chip" role="listitem" onclick="useChip(this)">What payment methods do you accept?</button>
+          <button class="chip" role="listitem" onclick="useChip(this)">Can I return my product?</button>
+          <button class="chip" role="listitem" onclick="useChip(this)">How long does delivery take?</button>
+          <button class="chip" role="listitem" onclick="useChip(this)">How do I reset my password?</button>
+          <button class="chip" role="listitem" onclick="useChip(this)">Do you ship internationally?</button>
+        </div>
+      </div>
+
+    </div><!-- /.chat-wrapper -->
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <span>Built with 🐍 Python · Flask · NLTK · Scikit-learn &nbsp;|&nbsp; FAQ AI Assistant &copy; 2025</span>
+  </footer>
+
+  <!-- ── JavaScript ──────────────────────────────────────────── -->
+  <script>
+    const input    = document.getElementById('question-input');
+    const sendBtn  = document.getElementById('send-btn');
+    const form     = document.getElementById('chat-form');
+    const msgBox   = document.getElementById('chat-messages');
+    const typing   = document.getElementById('typing-indicator');
+    const welcome  = document.getElementById('welcome-state');
+
+    /* Auto-grow textarea */
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+      sendBtn.disabled = !input.value.trim();
+    });
+
+    /* Enter to send, Shift+Enter for newline */
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!sendBtn.disabled) sendMessage();
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!sendBtn.disabled) sendMessage();
+    });
+
+    function useChip(btn) {
+      input.value = btn.textContent.trim();
+      input.style.height = 'auto';
+      sendBtn.disabled = false;
+      sendMessage();
+    }
+
+    function hideWelcome() {
+      if (welcome && !welcome.classList.contains('hidden')) {
+        welcome.style.display = 'none';
+        welcome.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function appendMessage(role, text, score = null) {
+      hideWelcome();
+
+      const msg = document.createElement('div');
+      msg.className = `message ${role}`;
+      msg.setAttribute('role', 'article');
+
+      const avatar = document.createElement('div');
+      avatar.className = `avatar ${role === 'user' ? 'user-avatar' : 'bot-avatar'}`;
+      avatar.setAttribute('aria-hidden', 'true');
+      avatar.textContent = role === 'user' ? '🧑' : '🤖';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = text;
+
+      if (role === 'bot' && score !== null) {
+        const scoreWrap = document.createElement('div');
+        scoreWrap.className = 'score-tag';
+
+        const pct = Math.round(score * 100);
+        const barWidth = Math.min(pct, 100);
+        scoreWrap.innerHTML = `
+          <span>Match confidence</span>
+          <div class="score-bar" style="width:${barWidth}px" title="${pct}% match"></div>
+          <span>${pct}%</span>`;
+        bubble.appendChild(scoreWrap);
+      }
+
+      msg.appendChild(avatar);
+      msg.appendChild(bubble);
+
+      // Insert before typing indicator
+      msgBox.insertBefore(msg, typing);
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      msgBox.scrollTo({ top: msgBox.scrollHeight, behavior: 'smooth' });
+    }
+
+    function showTyping() {
+      typing.classList.add('visible');
+      typing.setAttribute('aria-hidden', 'false');
+      msgBox.appendChild(typing); // keep at bottom
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      typing.classList.remove('visible');
+      typing.setAttribute('aria-hidden', 'true');
+    }
+
+    async function sendMessage() {
+      const q = input.value.trim();
+      if (!q) return;
+
+      appendMessage('user', q);
+
+      input.value = '';
+      input.style.height = 'auto';
+      sendBtn.disabled = true;
+      showTyping();
+
+      try {
+        const res = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q })
+        });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        hideTyping();
+        appendMessage('bot', data.answer, data.score ?? null);
+
+      } catch (err) {
+        hideTyping();
+        appendMessage('bot', '⚠️ Oops! Something went wrong. Please try again.');
+        console.error('Chat error:', err);
+      }
+
+      input.focus();
+    }
+  </script>
+
+</body>
+</html>
